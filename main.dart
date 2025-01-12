@@ -5,62 +5,39 @@ class User {
 }
 
 main() {
-  var liste1 = [1, 2, 3];
-  List<int> list = [1, 2, 3, 4];
+  void foo(String name, int age) {
+    print("${name} a ${age} ans");
+  }
 
-  print(list.length);
-  list.remove(2);
-  list.removeAt(2);
+// paramtre par default
+  String foo2(String s1, [String s2 = "default"]) {
+    return s1 + s2;
+  }
 
-  list.forEach((f) {
-    print(f);
-  });
+// parametre optionnel
+  String foo3(String s1, [String? s2]) {
+    if (s2 != null)
+      return s1 + s2;
+    else
+      return s1;
+  }
 
-// map retourne un iterable
-  var b = list.map((f) {
-    return f * f;
-  });
+// paramtre nommer ici on deux possibiliter
+  // error
+  // String foo4({String s1, String s2 = "default"}) {
+  //   return s1 + s2;
+  // }
+  // 1 mettre une valeur par default
+  // String foo4({String s1 = "", String s2 = "default"}) {
+  //   return s1 + s2;
+  // }
+  // 2 indiquer que la valeur est obligatoire avec le keyword required
+  String foo4({required String s1, String s2 = "default"}) {
+    return s1 + s2;
+  }
 
-  print(liste1);
-  print(list);
-  print(b);
-  print(b.toList());
-
-  List<User> users = [
-    User("Didi", 17),
-    User("Bibi",19),
-    User("Nini",24),
-  ];
-
-  Iterable<String> names = users.map((user) => user.name);
-/**
- * je filtre et j'affiche avec le forEach
-  Iterable<User> adults = users.where((user) => user.age >= 19);
-  adults.forEach((adult) => print("Adult : ${adult.name}"));
- */
-
-// je filtre et j'affiche
-  Iterable<int> adults = users
-    .where((user) => user.age >= 19)
-    .map((user) => user.age);
-
-  print(names);
-  print(adults);
-  print("adult ${adults}");
-  print(names.toList());
-  print(names.toSet());
-
-// Map a plus de flexibilite en terme de cle (String, int, double)
-  Map myMap = {
-    "name": "jean",
-    "age": 12,
-    "hasGirlFriend": false,
-    "isAdult": true,
-    "grade": [13,56,90],
-
-  };
-
-  print(myMap.values);
-  print(myMap.keys);
-  
+  foo("dylane", 20);
+  print(foo2("yo ", "bro"));
+  print(foo3("on ", "dit koi?"));
+  print(foo4(s1: "on ", s2: "dit koi?"));
 }
