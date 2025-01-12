@@ -1,43 +1,60 @@
-class User {
-  String name;
-  int age;
-  User(this.name, this.age);
+enum ModelType { modelS, modelX }
+
+class Car {
+  int wheels = 4;
+  String engine;
+
+  Car({this.engine = "electrique"});
+
+  void startCar() {
+    print("Car started !");
+  }
+}
+
+class Tesla extends Car {
+  ModelType model;
+  int year;
+  bool autodrive = false;
+  String name = "";
+
+  String get getName {
+    return "Mr: ${name}";
+  }
+
+  set setName(String name) {
+    this.name = name;
+  }
+
+  @override
+  void startCar() {
+    print("Tesla started !");
+  }
+
+  static String about() {
+    return "Class about car";
+  }
+
+  // Tesla(this.model); // parametre positionnel: pas tres lisible
+  Tesla(
+      {required this.model,
+      required this.year,
+      this.name =
+          "Dupont"}); // parametre nomme: mieux on peut placer les para dans l'ordre qu'on veux
+  //constructeur nommer
+  Tesla.WithAutodrive(
+      {required this.model, this.year = 2020, this.autodrive = true}) {}
 }
 
 main() {
-  void foo(String name, int age) {
-    print("${name} a ${age} ans");
-  }
+  Tesla car = Tesla(model: ModelType.modelS, year: 2024);
+  Tesla betterCar = Tesla.WithAutodrive(model: ModelType.modelX);
 
-// paramtre par default
-  String foo2(String s1, [String s2 = "default"]) {
-    return s1 + s2;
-  }
+  print(car.model);
+  print(car.getName);
+  print(betterCar.model);
+  car.startCar();
+  // methode static about est disponible uniquement sur la classe tesla
+  print(Tesla.about());
 
-// parametre optionnel
-  String foo3(String s1, [String? s2]) {
-    if (s2 != null)
-      return s1 + s2;
-    else
-      return s1;
-  }
-
-// paramtre nommer ici on deux possibiliter
-  // error
-  // String foo4({String s1, String s2 = "default"}) {
-  //   return s1 + s2;
-  // }
-  // 1 mettre une valeur par default
-  // String foo4({String s1 = "", String s2 = "default"}) {
-  //   return s1 + s2;
-  // }
-  // 2 indiquer que la valeur est obligatoire avec le keyword required
-  String foo4({required String s1, String s2 = "default"}) {
-    return s1 + s2;
-  }
-
-  foo("dylane", 20);
-  print(foo2("yo ", "bro"));
-  print(foo3("on ", "dit koi?"));
-  print(foo4(s1: "on ", s2: "dit koi?"));
+  print(car.engine);
 }
