@@ -11,11 +11,12 @@ class Car {
   }
 }
 
-class Tesla extends Car {
+class Tesla<T> extends Car {
   ModelType model;
   int year;
   bool autodrive = false;
   String name = "";
+  T data;
 
   String get getName {
     return "Mr: ${name}";
@@ -38,16 +39,19 @@ class Tesla extends Car {
   Tesla(
       {required this.model,
       required this.year,
+      required this.data,
       this.name =
           "Dupont"}); // parametre nomme: mieux on peut placer les para dans l'ordre qu'on veux
   //constructeur nommer
   Tesla.WithAutodrive(
-      {required this.model, this.year = 2020, this.autodrive = true}) {}
+      {required this.model, this.year = 2020, this.autodrive = true, required this.data,}) {}
 }
 
 main() {
-  Tesla car = Tesla(model: ModelType.modelS, year: 2024);
-  Tesla betterCar = Tesla.WithAutodrive(model: ModelType.modelX);
+  // Tesla car = Tesla<String>(model: ModelType.modelS, year: 2024, data: "data");
+  var car = Tesla<String>(model: ModelType.modelS, year: 2024, data: "data");
+  // Tesla car = Tesla(model: ModelType.modelS, year: 2024, data: "data");
+  Tesla<int> betterCar = Tesla<int>.WithAutodrive(model: ModelType.modelX, data: 17);
 
   print(car.model);
   print(car.getName);
@@ -57,4 +61,7 @@ main() {
   print(Tesla.about());
 
   print(car.engine);
+  print(car.data);
+  print(betterCar.data);
+
 }
