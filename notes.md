@@ -192,3 +192,6 @@ Le **rest operator** (`...`) est utilisé pour **regrouper** plusieurs valeurs e
 | `...`         | Spread Operator | Décompose une collection en ses éléments individuels.  |
 | `...`         | Rest Operator   | Regroupe plusieurs éléments dans une seule collection. |
 
+
+
+Code miror

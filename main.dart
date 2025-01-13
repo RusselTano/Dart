@@ -1,36 +1,32 @@
-import 'Tesla.dart';
-import "dart:math";
-// import 'Tesla.dart' as MyTesla;
-// import 'Tesla.dart' hide;
-// import 'Tesla.dart' show Tesla, Car ecupere uniquement Tesla et Car;
-// import 'Tesla.dart' deferred as TeslaLazy;
+import "dart:async";
+
+Future getData(){
+  return Future.value("je suis de la data");
+}
 
 enum ModelType { modelS, modelX }
 
-main() {
-  // Tesla car = Tesla<String>(model: ModelType.modelS, year: 2024, data: "data");
-  var car = Tesla<String>(model: ModelType.modelS, year: 2024, data: "data");
-  // Tesla car = Tesla(model: ModelType.modelS, year: 2024, data: "data");
-  Tesla<int> betterCar =
-      Tesla<int>.WithAutodrive(model: ModelType.modelX, data: 17);
+main() async {
+  // Future<String> f = Future<String>.delayed(Duration(seconds: 3),(){
+  //   return "fini";
+  // });
 
-  print(car.model);
-  print(car.getName);
-  print(betterCar.model);
-  car.startCar();
-  // methode static about est disponible uniquement sur la classe tesla
-  print(Tesla.about());
+  // f.then((String value){
+  //   print(value);
+  // });
 
-  Car car2 = Car(engine: "pop");
+  try {
+    var data = await getData();
+    print(data);   
+  } catch (e) {
+    print(e);
+  }
 
-  print(car.engine);
-  print(car2.engine);
-  print(car.data);
-  print(betterCar.data);
+  getData().then((data){
 
-  List list = [1, 2, 4, 7, 48, 3, 8, 45];
-  int nbMax = list.first;
-  list.forEach((nb) => nbMax = max(nbMax, nb));
+  });
 
-  print(nbMax);
+  print("Hello");
+
+
 }
