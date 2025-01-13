@@ -1,31 +1,39 @@
 import 'dart:io';
 import 'dart:math';
 
-int validateNumberOfRounds(String? input) {
-  if (input != null) {
-    int? numberOfRounds = int.tryParse(input);
+// Valide et retourne un nombre de tours correct
+int validateNumberOfRounds() {
+  while (true) {
+    print("\nCombien de tours voulez-vous jouer ?");
+    String? input = stdin.readLineSync();
+    int? numberOfRounds = int.tryParse(input ?? '');
+
     if (numberOfRounds != null && numberOfRounds > 0) {
-      return numberOfRounds;
+      return numberOfRounds; // Retourne le nombre valide
+    } else {
+      print(
+          "⚠️ Entrée invalide. Veuillez entrer un nombre entier positif superieur a zero.");
     }
   }
-  throw ("⚠️ Le nombre de tours est invalide. Veuillez entrer un entier positif.");
 }
 
+// Détermine le gagnant d'un round
 String findWinner(String userChoice, String cpuChoice) {
-  if (userChoice == cpuChoice) {
-    return "Egalite";
-  }
-  if (userChoice == "R" && cpuChoice == "C" ||
-      userChoice == "C" && cpuChoice == "P" ||
-      userChoice == "P" && cpuChoice == "R") {
+  if (userChoice == cpuChoice) return "Egalite";
+
+  if ((userChoice == "R" && cpuChoice == "C") ||
+      (userChoice == "C" && cpuChoice == "P") ||
+      (userChoice == "P" && cpuChoice == "R")) {
     return "Joueur";
   }
   return "CPU";
 }
 
+// Récupère un choix valide de l'utilisateur
 String getUserChoice(List<String> choices) {
   while (true) {
-    print("Faites votre choix : R pour Roche, P pour Papier, C pour Ciseaux.");
+    print(
+        "\nFaites votre choix : R pour Roche, P pour Papier, C pour Ciseaux.");
     String? input = stdin.readLineSync();
 
     if (input != null && choices.contains(input.toUpperCase())) {
@@ -36,33 +44,28 @@ String getUserChoice(List<String> choices) {
   }
 }
 
+// Affiche les règles du jeu
 void displayRules() {
   print("""
-🎮 Bienvenue au jeu Roche-Papier-Ciseaux 🎮
-Les règles sont simples :
-- ✊ Roche bat ✌️ Ciseaux
-- ✌️ Ciseaux bat ✋ Papier
-- ✋ Papier bat ✊ Roche
-Essayez de battre l'ordinateur ! 🎯
-  """);
+          🎮 Bienvenue au jeu Roche-Papier-Ciseaux 🎮
+                Les règles sont simples :
+                - ✊ Roche bat ✌️ Ciseaux
+                - ✌️ Ciseaux bat ✋ Papier
+                - ✋ Papier bat ✊ Roche
+              Essayez de battre l'ordinateur ! 🎯
+        """);
 }
 
+// Main
 void main() {
   List<String> choices = ["R", "P", "C"];
   int userScore = 0, cpuScore = 0;
 
   displayRules();
 
-  // Demander et valider le nombre de tours
-  print("\nCombien de tours voulez-vous jouer ?");
-  int numberOfRounds;
-  try {
-    numberOfRounds = validateNumberOfRounds(stdin.readLineSync());
-    print("👍 La partie se jouera en $numberOfRounds tours !");
-  } catch (e) {
-    print(e);
-    return; // Quitte le programme si le nombre est invalide
-  }
+  // Demander un nombre de tours valide
+  int numberOfRounds = validateNumberOfRounds();
+  print("\n👍 La partie se jouera en $numberOfRounds tours !");
 
   // Boucle principale du jeu
   for (var i = 1; i <= numberOfRounds; i++) {
@@ -70,7 +73,7 @@ void main() {
 
     // Obtenir le choix de l'utilisateur
     String userChoice = getUserChoice(choices);
-    print("Votre choix : $userChoice");
+    print("\nVotre choix : $userChoice");
 
     // Générer le choix de l'ordinateur
     String cpuChoice = choices[Random().nextInt(choices.length)];
@@ -96,12 +99,14 @@ void main() {
     print("\n==============================");
   }
 
-  // Afficher le résultat final
+  // Résultat final
   print("\n--- 🏆 Résultat final ---");
   if (userScore > cpuScore) {
-    print("🎉 Félicitations ! Vous avez gagné avec un score de $userScore contre $cpuScore.");
+    print(
+        "🎉 Félicitations ! Vous avez gagné avec un score de $userScore contre $cpuScore.");
   } else if (cpuScore > userScore) {
-    print("😞 L'ordinateur a gagné avec un score de $cpuScore contre $userScore.");
+    print(
+        "😞 L'ordinateur a gagné avec un score de $cpuScore contre $userScore.");
   } else {
     print("🤝 C'est une égalité parfaite avec un score de $userScore partout.");
   }
